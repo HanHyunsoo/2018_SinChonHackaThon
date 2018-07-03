@@ -1,0 +1,55 @@
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand" href="/"></a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">오늘</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">날씨는</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">하루종일</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">맑음</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('/assets/cloud')">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="page-heading">
+              <h1>일기장그램</h1>
+              
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+<div class="container">
+  <form action="/posts/create" method="post" enctype="multipart/form-data">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <input type="text" name="post_title" placeholder="제목을 입력해 주세요">
+      <input type="text" name="post_content" placeholder="내용을 입력해 주세요">
+      <input type="text" name="hashtags" placeholder="#해시태그는 ,로 구분해주세요">
+      <input type="file" name="img" accept="image/*" />
+      <input type="submit" value="저장하기">
+  </form>
+</div>
+<hr/>

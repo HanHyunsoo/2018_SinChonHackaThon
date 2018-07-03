@@ -1,0 +1,127 @@
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand" href="/"></a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">오늘</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">날씨는</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">하루종일</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">맑음</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('/assets/cloud')">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="page-heading">
+              <h1>일기장그램</h1>
+              
+              <% if current_user.nil? %>
+                <span class="subheading">
+                <a href="/users/sign_in">로그인</a><br>
+                오늘 당신에게 무슨 일이 일어났나요?</span>
+              <% end %>
+              <% unless current_user.nil? %>
+              <span class="subheading">
+                <%= current_user.email %><br>
+                <a href="/users/sign_out">로그아웃</a><br>
+                오늘 <%= current_user.name %>님에게 무슨 일이 일어났나요?</span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+
+
+<div class="container">
+  <div class="titi">
+    <a href="posts/new">게시글 작성</a><br><br>
+  </div>
+</div>
+
+<div class="container">
+	<div class="row">
+        <% @posts.each do |post| %>
+    
+        <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
+            <div class="card">
+              <div class="card h-100">
+                <% if post.img_url.nil? %>
+                  <a href="#"><img class="card-img-top" src="/assets/cloud" alt=""></a>
+                <%end%>
+                <% unless post.img_url.nil? %>
+                  <a href="#"><img class="card-img-top" src="<%= post.img_url %>" alt=""></a>
+                <% end %>
+                
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <p><b><%= post.title %></b></p>
+                  </h4>
+                    <p><%= post.content %></p>
+    
+                    <p> # :
+                    <% post.hashtags.each do |tag| %>
+                        <%= tag.name %>
+                    <% end %>
+                    </p>
+                    <p><%= post.user.name %>님의 게시글</p>
+                    
+                    <span class="coco">
+                      <a href="/posts/delete/<%= post.id %>">삭제</a>
+                      <a href="/posts/edit/<%=post.id%>">수정</a><br>
+                    </span>
+                    <br>
+                    <% post.comments.each do |c|%>
+                      <span class="coco">
+                        댓글: <%=c.content%> <a href = 'comments/delete/<%=c.id%>'>삭제 </a><br>
+                      </span>
+                    <%end%>
+                    <br>
+                    
+                    <form action ="/posts/index/<%=post.id%>/create" method=post>
+                      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                      <input type='textarea' name='comment' placeholder="댓글입력">
+                      <button type="submit" class="btn btn-outline-primary">Asked!</button>
+                    </form>
+                    
+                </div>
+              </div>
+            </div>
+        </div>
+        <% end %>
+    </div>
+</div>
+
+
+<!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            
+            <p class="copyright text-muted">Copyright &copy; Sic parvis magna 2018</p>
+          </div>
+        </div>
+      </div>
+    </footer>
